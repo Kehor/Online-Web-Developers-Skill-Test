@@ -35,16 +35,17 @@ const FormComponent = class {
     // Start modifying the form elements here!
     // You are allowed to add extra methods, properties or change the constructor of this class   
     var oppoSelect = document.getElementsByName("status")[0];
-    oppoStatus.forEach(oppoStatu => {
+    oppoStatus.forEach((oppoStatu, key) => {
       var opt = document.createElement("option");
+      opt.id = key;
       opt.value = oppoStatu.K_OPPO_STATUS;
       opt.text = oppoStatu.STATUS;
       oppoSelect.add(opt);
     });
-
-    document.getElementsByName("success")[0].value = oppoSelect.value;
+    
+    document.getElementsByName("success")[0].value = oppoStatus[oppoSelect.selectedIndex].SUCCESS;
     oppoSelect.onchange = function(){
-      document.getElementsByName("success")[0].value = oppoSelect.value;
+      document.getElementsByName("success")[0].value = oppoStatus[oppoSelect.selectedIndex].SUCCESS;
     };
        
   }
