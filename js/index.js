@@ -32,10 +32,36 @@ const FormComponent = class {
 
   }
   start() {
-	  // Start modifying the form elements here!
-	  // You are allowed to add extra methods, properties or change the constructor of this class
+    // Start modifying the form elements here!
+    // You are allowed to add extra methods, properties or change the constructor of this class   
+    var oppoSelect = document.getElementsByName("status")[0];
+    oppoStatus.forEach(oppoStatu => {
+      var opt = document.createElement("option");
+      opt.value = oppoStatu.K_OPPO_STATUS;
+      opt.text = oppoStatu.STATUS;
+      oppoSelect.add(opt);
+    });
+
+    document.getElementsByName("success")[0].value = oppoSelect.value;
+    oppoSelect.onchange = function(){
+      document.getElementsByName("success")[0].value = oppoSelect.value;
+    };
+       
   }
+
+  response(url) {
+    var output = document.getElementsByClassName("output")[0];
+    var getStatus = parseInt(url.searchParams.get("status"));
+    var getSuccess = parseInt(url.searchParams.get("success"));
+    var responseArray = {status: getStatus, success: getSuccess}
+    output.innerHTML = JSON.stringify(responseArray);
+  }
+  
 }
 
 const fc = new FormComponent();
+var url = new URL(window.location.href);
 fc.start();
+if(url.searchParams.get("status") != null){
+  fc.response(url)
+}
